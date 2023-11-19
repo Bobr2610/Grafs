@@ -1,0 +1,25 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+from random import choice, shuffle
+
+e = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+     'x', 'y', 'z']
+a = list(range(2, 20))
+b = list(range(2, 26))
+c = choice(b)
+g = [-1, 1]
+graph = nx.Graph()
+for i in range(c):
+    graph.add_node(e[i])
+
+for i in range(c):
+    n1, n2 = choice((1, 2)), choice(b)
+    if 0 < n2 < 25 and n2 == n1:
+        graph.add_edge(e[n1].upper(), e[n2 - choice(g)].upper(), weight=choice(a))
+    else:
+        graph.add_edge(e[n1].upper(), e[n2].upper(), weight=choice(a))
+pos = nx.circular_layout(graph)
+nx.draw(graph, pos, with_labels=True, font_weight='bold')
+edge_weight = nx.get_edge_attributes(graph, 'weight')
+nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_weight)
+plt.show()
